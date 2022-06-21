@@ -91,4 +91,8 @@ export const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
+  priceTextWithImage: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
 });

@@ -7,7 +7,7 @@ import ButtomTabs from '@navigator/buttomTabs';
 
 import TrendingNFTLists from '@screens/TrendingNFTLists';
 import {SCREEN_STACK_ENUM} from '@enum/screen-stack-enum';
-import {SplashScreen} from '@screens/SplashScreen/splash-screen';
+
 import FavouriteNFTLists from '@screens/FavouriteNFTLists/FavouriteNFTLists';
 import MarketPlaceNFTListing from '@screens/MarketPlaceNFTListings/market-place-nft-listings';
 
@@ -15,14 +15,7 @@ const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName={SCREEN_STACK_ENUM.SPLASH_SCREEN}>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name={SCREEN_STACK_ENUM.SPLASH_SCREEN}
-        component={SplashScreen}
-      />
+    <Stack.Navigator initialRouteName={SCREEN_STACK_ENUM.BUTTOMTABS}>
       <Stack.Screen
         options={{
           headerShown: false,

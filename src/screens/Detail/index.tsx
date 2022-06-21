@@ -6,9 +6,9 @@ import {
   ScrollView,
   Pressable,
   Image,
-  Linking,
   Alert,
   ActivityIndicator,
+  Share,
 } from 'react-native';
 
 import {useGetNftDetails} from '@hooks';
@@ -38,11 +38,18 @@ const Detail: React.FC<{navigation?: any}> = ({navigation}) => {
     };
   };
   const handlePress = useCallback(async () => {
-    const supported = await Linking.canOpenURL(getUrl());
-
-    if (supported) {
-      await Linking.openURL(getUrl());
-    } else {
+    try {
+      const result = await Share.share({
+        message: getUrl(),
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+        } else {
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
       Alert.alert(`Don't know how to open this URL: ${getUrl()}`);
     }
   }, [getUrl]);
@@ -65,32 +72,30 @@ const Detail: React.FC<{navigation?: any}> = ({navigation}) => {
         <Text style={[styles.textStyle, styles.descriptionsContainer]}>
           {data?.nft?.description}{' '}
         </Text>
-        <View style={styles.actionContainer}>
-          {data?.nft?.listings[0]?.price ? (
-            <View style={styles.priceContainer}>
-              <Text style={[styles.textStyle, styles.priceText]}>Price</Text>
-              <View style={[styles.flexRow, styles.flexDirection]}>
-                <Image source={priceIcon} style={styles.bigCircle} />
-                <Text style={[styles.textStyle, styles.priceText]}>
-                  {data?.nft?.listings[0]?.price
-                    ? getPrice(data?.nft?.listings[0]?.price)
-                    : ''}
-                </Text>
+        <View>
+          <View style={styles.actionContainer}>
+            {data?.nft?.listings[0]?.price ? (
+              <View style={styles.priceContainer}>
+                <Text style={[styles.textStyle, styles.priceText]}>Price</Text>
+                <View
+                  style={[
+                    styles.flexRow,
+                    styles.flexDirection,
+                    styles.priceTextWithImage,
+                  ]}>
+                  <Image source={priceIcon} style={styles.bigCircle} />
+                  <Text style={[styles.textStyle, styles.priceText]}>
+                    {data?.nft?.listings[0]?.price
+                      ? getPrice(data?.nft?.listings[0]?.price)
+                      : ''}
+                  </Text>
+                </View>
               </View>
-            </View>
-          ) : null}
-
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={[styles.buttons, styles.makeOfferButton]}
-              onPress={handlePress}>
-              <Text style={styles.makeOfferText}>Make Offer</Text>
-            </Pressable>
-
+            ) : null}
             <Pressable
               style={[styles.buttons, styles.buyNowButton]}
               onPress={handlePress}>
-              <Text style={styles.buyNowText}>Buy Now</Text>
+              <Text style={styles.buyNowText}>Share</Text>
             </Pressable>
           </View>
         </View>

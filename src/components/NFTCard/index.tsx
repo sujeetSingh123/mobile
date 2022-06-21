@@ -1,12 +1,5 @@
 import React, {useCallback, useContext} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Alert,
-  Linking,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Share} from 'react-native';
 import {styles} from './style';
 import {priceIcon, unLove, love} from '@constants/images';
 import {SCREEN_STACK_ENUM} from '@enum/screen-stack-enum';
@@ -48,13 +41,17 @@ const NFTCard: React.FC<{
 
   const handlePress = useCallback(
     async nftAddress => {
-      const supported = await Linking.canOpenURL(url + nftAddress);
-
-      if (supported) {
-        await Linking.openURL(url + nftAddress);
-      } else {
-        Alert.alert(`Don't know how to open this URL: ${url + nftAddress}`);
-      }
+      try {
+        const result = await Share.share({
+          message: url + nftAddress,
+        });
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+          } else {
+          }
+        } else if (result.action === Share.dismissedAction) {
+        }
+      } catch (error) {}
     },
     [url],
   );
@@ -116,7 +113,7 @@ const NFTCard: React.FC<{
               <TouchableOpacity
                 style={styles.buyNowButton}
                 onPress={() => handlePress(address)}>
-                <Text style={styles.buyNowText}>Buy Now</Text>
+                <Text style={styles.buyNowText}>Share</Text>
               </TouchableOpacity>
             </View>
           )}

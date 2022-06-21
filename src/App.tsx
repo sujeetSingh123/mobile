@@ -20,6 +20,7 @@ import {Listing} from '@type';
 import {getAndPrepListings} from '@utils/helpers';
 import {AppStateContext} from '@context/context';
 import {getStoredData, INFT, _storeData} from '@utils/async-storage';
+import RNSplashScreen from 'react-native-splash-screen';
 
 const App = () => {
   const [featuredListings, setFeaturedListings] = useState<Listing[]>([]);
@@ -63,6 +64,9 @@ const App = () => {
       }
     };
     getStoredNFtLists();
+    setTimeout(() => {
+      RNSplashScreen.hide();
+    }, 400);
   }, []);
 
   const addOrRemoveNFTAsFav = (nft: INFT) => {

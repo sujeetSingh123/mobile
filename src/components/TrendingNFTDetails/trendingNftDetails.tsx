@@ -8,8 +8,8 @@ import {
   StatusBar,
   Platform,
   ActivityIndicator,
-  Linking,
   Alert,
+  Share,
 } from 'react-native';
 import {colors} from '@constants/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -51,15 +51,18 @@ const TrendingNfTDetails: React.FC<ITrendingNFTDetails> = ({
   }, [nftMetadata.uri]);
 
   const handlePress = useCallback(async () => {
-    const supported = await Linking.canOpenURL(
-      getUrl(item.subdomain, nftMetadata?.metadataAddress),
-    );
-
-    if (supported) {
-      await Linking.openURL(
-        getUrl(item.subdomain, nftMetadata?.metadataAddress),
-      );
-    } else {
+    try {
+      const result = await Share.share({
+        message: getUrl(item.subdomain, nftMetadata?.metadataAddress),
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+        } else {
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
       Alert.alert(
         `Don't know how to open this URL: ${getUrl(
           item.subdomain,
@@ -99,7 +102,7 @@ const TrendingNfTDetails: React.FC<ITrendingNFTDetails> = ({
         </View>
         <View style={styles.buyNowContainer}>
           <TouchableOpacity style={styles.buyNowButton} onPress={handlePress}>
-            <Text style={styles.buyNowText}>Make Offer</Text>
+            <Text style={styles.buyNowText}>Share Now</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

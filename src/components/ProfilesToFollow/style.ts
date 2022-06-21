@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
 
   textStyle: {
     color: colors.light,
+    fontFamily: 'JosefinSans-Light',
   },
   imageStyle: {
     width: '100%',
