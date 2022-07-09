@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     color: colors.light,
+    // fontFamily: 'Ionicons',
   },
 
   discoverAllStyle: {

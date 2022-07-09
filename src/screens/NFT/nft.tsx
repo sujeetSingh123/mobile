@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {
   ScrollView,
-  FlatList,
+  // FlatList,
   View,
   Text,
   ActivityIndicator,
@@ -12,21 +12,21 @@ import {
 import {SCREEN_STACK_ENUM} from '@enum';
 import NFTCard from '@components/NFTCard';
 import {useListFeaturedBuyNowNFT} from '@hooks';
-import {AppStateContext} from '@context/context';
+// import {AppStateContext} from '@context/context';
 import {checkIfScrollToBottom} from '@utils/helpers';
 import HomePageTitle from '@components/HomePageTitle';
-import TrendingNftCard from '@components/TrendinNftCard/TrendingNftCard';
+// import TrendingNftCard from '@components/TrendinNftCard/TrendingNftCard';
 
 import {styles} from './style';
 import {MainLayout} from '@components/MainLayout/MainLayout';
 
-const trendingTitle = 'Trending Auctions';
+// const trendingTitle = 'Trending Auctions';
 const currentListingTitle = 'Current Listings';
 
 const NFT: React.FC<{navigation?: any}> = ({navigation}) => {
   const [offset, setOffset] = React.useState(0);
-  const {featuredListings, setSelectedIndexOfFeaturedNft} =
-    useContext(AppStateContext);
+  // const {featuredListings, setSelectedIndexOfFeaturedNft} =
+  //   useContext(AppStateContext);
   const [nftLists, setNftLists] = React.useState<any>([]);
 
   const {data: buyNowNftCurrentListings, loading} = useListFeaturedBuyNowNFT(
@@ -54,8 +54,8 @@ const NFT: React.FC<{navigation?: any}> = ({navigation}) => {
             setOffset(newOffset);
           }
         }}>
-        <HomePageTitle title={trendingTitle} showDiscoverAll={false} />
-        <View style={[styles.marginTop]}>
+        {/* <HomePageTitle title={trendingTitle} showDiscoverAll={false} /> */}
+        {/* <View style={[styles.marginTop]}>
           <FlatList
             data={featuredListings}
             keyExtractor={item => item?.listingAddress.toString()}
@@ -71,7 +71,7 @@ const NFT: React.FC<{navigation?: any}> = ({navigation}) => {
               />
             )}
           />
-        </View>
+        </View> */}
         <View style={styles.marginTop}>
           {false ? (
             <View>
